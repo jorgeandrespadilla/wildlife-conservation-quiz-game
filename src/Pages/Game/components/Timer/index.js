@@ -9,7 +9,7 @@ function Timer({
 }) {
   return (
     <div className="timer__wrapper">
-      <Clock />
+      <Clock className="timer__icon" />
       <div className="timer__progress">
         <ProgressBar value={timeProgress} animated="fast" />
         {remainingTime} seconds left

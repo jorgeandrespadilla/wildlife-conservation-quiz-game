@@ -13,3 +13,29 @@
   justify-content: center;
   align-items: flex-start;
 }
+
+.life__icon {
+  animation: heartBeat 1.5s infinite;
+  color: var(--color-red);
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

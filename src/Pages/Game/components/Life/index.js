@@ -10,7 +10,7 @@ function Life({
 }) {
   return (
     <div className="life__wrapper">
-      <Heart />
+      <Heart className="life__icon" />
       <div className="life__progress">
         <ProgressBar value={lifeProgress} animated="slow" />
         {remainingLives}/{totalLives} lives
