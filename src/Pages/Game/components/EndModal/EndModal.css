@@ -1,0 +1,18 @@
+.modal__content__wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__title {
+  text-align: center;
+  margin-block: 0.5rem;
+}
+
+.modal__text {
+  text-align: center;
+  margin-block: 0.5rem;
+  margin-bottom: 2rem;
+}

@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import "./Modal.css";
 
-function Modal({ children, isOpen, onClose }) {
+function Modal({ 
+  children,
+  isOpen,
+  onClose = () => {},
+}) {
 
   useEffect(() => {
     if (isOpen) {
@@ -43,7 +47,7 @@ function Modal({ children, isOpen, onClose }) {
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default Modal;
