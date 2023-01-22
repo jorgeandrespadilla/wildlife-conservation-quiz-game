@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import "./Modal.css";
 
 function Modal({ children, isOpen, onClose }) {
-  
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -30,7 +30,9 @@ function Modal({ children, isOpen, onClose }) {
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
           >
-            {children}
+            <div className="modal__inner-wrapper">
+              {children}
+            </div>
           </motion.div>
         </motion.div>
       )}

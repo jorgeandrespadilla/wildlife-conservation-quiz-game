@@ -47,7 +47,7 @@ function QuestionCard({
         <div className="question__container">
           <QuestionOverlay isVisible={isOverlayVisible} isValid={isValid} onContinue={handleContinue} />
           <div className="question__timer">
-            <ProgressBar value={progress} />
+            <ProgressBar value={progress} animated="fast" />
             {time} seconds left
           </div>
           <h3><Balancer>{question}</Balancer></h3>

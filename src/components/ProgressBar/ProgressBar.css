@@ -11,6 +11,10 @@
   height: 100%;
 }
 
-.progress-bar__fill__animated {
-  transition: width 0.05s linear;
+.progress-bar__fill--animated-slow {
+  transition: width 0.5s linear;
+}
+
+.progress-bar__fill--animated-fast {
+  transition: width 0.05s ease-in-out;
 }

@@ -5,15 +5,15 @@ import { useState } from "react";
  * @param {boolean} initialState Initial state of the modal
  */
 export const useModal = (initialState = false) => {
-  const [isOpened, setIsOpened] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(initialState);
 
-  const open = () => setIsOpened(true);
+  const open = () => setIsOpen(true);
 
-  const close = () => setIsOpened(false);
+  const close = () => setIsOpen(false);
 
   return {
     /** Whether the modal is open or not. */
-    isOpened,
+    isOpen,
     /** Function to open the modal. */
     open,
     /** Function to close the modal. */

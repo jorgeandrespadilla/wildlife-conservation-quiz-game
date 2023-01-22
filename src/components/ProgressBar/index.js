@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types';
 import './ProgressBar.css';
 
+const validAnimationValues = ['', 'slow', 'fast'];
+
 function ProgressBar({ 
   value,
   fillColor = 'currentColor',
-  animated = true,
+  animated = '',
 }) {
+  const animatedClass = animated && validAnimationValues.includes(animated) ? `progress-bar__fill--animated-${animated}` : '';
   return (
     <div className="progress-bar">
-      <div className={`progress-bar__fill ${animated ? 'progress-bar__fill--animated' : ''}`} style={{	
+      <div className={`progress-bar__fill ${animatedClass}`} style={{	
         width: `${value}%`,
         backgroundColor: fillColor,
       }} />
@@ -19,7 +22,7 @@ function ProgressBar({
 ProgressBar.propTypes = {
     value: PropTypes.number.isRequired,
     fillColor: PropTypes.string,
-    animated: PropTypes.bool,
+    animated: PropTypes.oneOf(validAnimationValues),
 };
 
 export default ProgressBar;

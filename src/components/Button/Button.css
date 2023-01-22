@@ -17,3 +17,8 @@
 .button:hover {
   filter: opacity(0.8);
 }
+
+.green-btn {
+  background-color: var(--color-green);
+  color: white;
+}
