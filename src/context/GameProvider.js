@@ -34,8 +34,6 @@ export const GameContext = createContext({
     total: 0,
     /** Life progress. */
     progress: 0,
-    /** Resets the lives. */
-    reset: () => { },
   },
   /** Game timer. */
   time: {
@@ -49,8 +47,6 @@ export const GameContext = createContext({
     start: () => { },
     /** Stops the timer. */
     stop: () => { },
-    /** Resets the timer. */
-    reset: () => { },
   },
   player: {
     /** Indicates if the player has won. */
@@ -58,13 +54,18 @@ export const GameContext = createContext({
     /** Damages the player. */
     damage: () => { },
   },
+  /** Indicates if the game has started. */
+  hasStarted: false,
   /** Indicates if the game has ended. */
   hasEnded: false,
+  /** Starts the game. */
+  start: () => { },
   /** Resets the game. */
-  reset: () => { },
+  restart: () => { },
 });
 
 export const GameProvider = ({ children }) => {
+  const [startedGame, setStartedGame] = useState(false);
   const [pausedGame, setPausedGame] = useState(false);
 
   const {
@@ -72,6 +73,7 @@ export const GameProvider = ({ children }) => {
     currentQuestionNumber,
     nextQuestion,
     hasCompleted: hasCompletedAllQuestions,
+    reset: resetQuestions,
   } = useQuestions(questions, APP_CONFIG.maxQuestions);
 
   const {
@@ -97,10 +99,18 @@ export const GameProvider = ({ children }) => {
 
   const stopTimer = () => setPausedGame(true);
 
-  const resetGame = () => {
+  const restartGame = () => {
+    setStartedGame(false);
+    resetQuestions();
     resetLife();
     resetTimer();
   };
+
+  const startGame = () => {
+    setStartedGame(true);
+    setPausedGame(false);
+    nextQuestion();
+  }
 
   const hasGameEnded = hasCompletedAllQuestions || hasPlayerDied || hasTimeFinished;
   const hasPlayerWon = hasCompletedAllQuestions && !hasPlayerDied && !hasTimeFinished;
@@ -117,7 +127,6 @@ export const GameProvider = ({ children }) => {
         remaining: remainingLives,
         total: APP_CONFIG.maxLives,
         progress: lifeProgress,
-        reset: resetLife,
       },
       time: {
         remaining: remainingTime,
@@ -125,14 +134,15 @@ export const GameProvider = ({ children }) => {
         progress: timeProgress,
         start: startTimer,
         stop: stopTimer,
-        reset: resetTimer,
       },
       player: {
         hasWon: hasPlayerWon,
         damage: damagePlayer,
       },
+      hasStarted: startedGame,
       hasEnded: hasGameEnded,
-      reset: resetGame,
+      start: startGame,
+      restart: restartGame,
     }}>
       {children}
     </GameContext.Provider>

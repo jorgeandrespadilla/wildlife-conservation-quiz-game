@@ -16,16 +16,23 @@ export const useQuestions = (questions, times) => {
     setQuestionsAnswered((prevQuestionsAnswered) => prevQuestionsAnswered + 1);
   };
 
-  const hasCompleted = questionsAnswered >= times;
+  const hasCompleted = questionsAnswered > times;
+
+  const reset = () => {
+    setQuestion(null);
+    setQuestionsAnswered(0);
+  };
 
   return {
     /** Current question. */
     question,
     /** Current question number. */
-    currentQuestionNumber: questionsAnswered + 1,
+    currentQuestionNumber: questionsAnswered,
     /** Gets the next question. */
     nextQuestion,
     /** Indicates if all the questions have been answered. */
     hasCompleted,
+    /** Resets the questions. */
+    reset,
   };
 }
