@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import Balancer from 'react-wrap-balancer';
@@ -6,33 +6,48 @@ import Button from 'components/Button';
 import Card from 'components/Card';
 import ProgressBar from 'components/ProgressBar';
 import QuestionOverlay from '../QuestionOverlay';
+import { useTimeProgress } from 'hooks/useTimeProgress';
 import { questionOptions } from 'shared/data';
 import { APP_CONFIG } from 'shared/config';
-import { useTimeProgress } from 'hooks/useTimeProgress';
 import './QuestionCard.css';
 
 function QuestionCard({
   question,
   correctAnswer,
-  onContinue = () => { }
+  onAnswer = (isAnswerCorrect) => { },
+  onTimeout = () => { },
+  onContinue = () => { },
 }) {
-  const { time, progress, reset } = useTimeProgress(APP_CONFIG.maxTimePerQuestion, {
-    paused: false,
+  const [isValid, setIsValid] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const { time, progress, reset, hasFinished } = useTimeProgress(APP_CONFIG.maxTimePerQuestion, {
+    paused: isPaused,
     reverse: true,
     progressInterval: 50,
   });
-  const [isValid, setIsValid] = useState(null);
 
   function handleAnswer(value) {
-    const isAnswerValid = value === correctAnswer;
-    setIsValid(isAnswerValid);
+    const isAnswerCorrect = value === correctAnswer;
+    onAnswer(isAnswerCorrect);
+    setIsValid(isAnswerCorrect);
+    setIsPaused(true);
   }
 
   function handleContinue() {
     onContinue();
-    setIsValid(null);
     reset();
+    setIsValid(null);
+    setIsPaused(false);
   }
+
+  // Handle timeout.
+  useEffect(() => {
+    if (hasFinished && !isPaused) {
+      setIsValid(false);
+      setIsPaused(true);
+      onTimeout();
+    }
+  }, [hasFinished, isPaused, onTimeout]);
 
   const isOverlayVisible = isValid !== null;
 
@@ -74,6 +89,8 @@ QuestionCard.propTypes = {
   question: PropTypes.string.isRequired,
   correctAnswer: PropTypes.string.isRequired,
   onAnswer: PropTypes.func,
+  onTimeout: PropTypes.func,
+  onContinue: PropTypes.func,
 };
 
 export default QuestionCard;
