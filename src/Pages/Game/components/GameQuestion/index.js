@@ -33,6 +33,12 @@ function GameQuestion() {
   };
 
   useEffect(() => {
+    if (game.hasStarted) {
+      playTimer();
+    }
+  }, [game.hasStarted, playTimer]);
+
+  useEffect(() => {
     if (game.hasEnded) {
       pauseTimer();
     }

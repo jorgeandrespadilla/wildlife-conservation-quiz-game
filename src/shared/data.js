@@ -91,7 +91,7 @@ export const questions = [
         correctAnswer: optionType.TRUE
     },
     {
-        statement: "Increasing public interest in wildlife conservation can create awareness and funding issues for conservation efforts.",
+        statement: "Increasing public interest in wildlife conservation can decrease awareness and funding issues for conservation efforts.",
         correctAnswer: optionType.FALSE
     }
 ];
