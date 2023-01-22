@@ -1,9 +1,18 @@
 import QuestionCard from 'components/QuestionCard';
+import { useBoolean } from 'hooks/useBoolean';
 import { useGameContext } from 'hooks/useGameContext';
+import { useEffect } from 'react';
 import './GameQuestion.css';
 
 function GameQuestion() {
   const game = useGameContext();
+
+  const {
+    value: isPaused,
+    setTrue: pauseTimer,
+    setFalse: playTimer,
+  } = useBoolean(false);
+
   const question = game.questions.current;
 
   const handleAnswer = (isAnswerCorrect) => {
@@ -23,6 +32,12 @@ function GameQuestion() {
     game.time.play();
   };
 
+  useEffect(() => {
+    if (game.hasEnded) {
+      pauseTimer();
+    }
+  }, [game.hasEnded, pauseTimer]);
+
   return (
     <>
       {
@@ -34,6 +49,9 @@ function GameQuestion() {
             <QuestionCard
               question={question.statement}
               correctAnswer={question.correctAnswer}
+              isPaused={isPaused}
+              playTimer={playTimer}
+              pauseTimer={pauseTimer}
               onAnswer={handleAnswer}
               onTimeout={handleTimeout}
               onContinue={handleContinue}

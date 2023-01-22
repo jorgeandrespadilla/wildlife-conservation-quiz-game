@@ -10,22 +10,18 @@ import { useTimeProgress } from 'hooks/useTimeProgress';
 import { questionOptions } from 'shared/data';
 import { APP_CONFIG } from 'shared/config';
 import './QuestionCard.css';
-import { useBoolean } from 'hooks/useBoolean';
 
 function QuestionCard({
   question,
   correctAnswer,
+  isPaused,
+  playTimer,
+  pauseTimer,
   onAnswer = (isAnswerCorrect) => { },
   onTimeout = () => { },
   onContinue = () => { },
 }) {
   const [isValid, setIsValid] = useState(null);
-  
-  const {
-    value: isPaused,
-    setTrue: pauseTimer,
-    setFalse: playTimer,
-  } = useBoolean(false);
 
   const { time, progress, reset, hasFinished } = useTimeProgress(APP_CONFIG.maxTimePerQuestion, {
     paused: isPaused,
@@ -95,6 +91,9 @@ function QuestionCard({
 QuestionCard.propTypes = {
   question: PropTypes.string.isRequired,
   correctAnswer: PropTypes.string.isRequired,
+  isPaused: PropTypes.bool.isRequired,
+  playTimer: PropTypes.func.isRequired,
+  pauseTimer: PropTypes.func.isRequired,
   onAnswer: PropTypes.func,
   onTimeout: PropTypes.func,
   onContinue: PropTypes.func,
