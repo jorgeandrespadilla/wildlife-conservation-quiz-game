@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Wildlife Conservation Quiz",
+  "name": "Wildlife Conservation Quiz Game",
   "icons": [
     {
       "src": "favicon.ico",
