@@ -1,0 +1,26 @@
+.question__overlay {
+  z-index: 10;
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  background-color: #fff;
+  width: 100%;
+}
+
+.question__overlay__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.question__overlay__icon {
+  aspect-ratio: 1/1;
+  width: 4rem;
+}
