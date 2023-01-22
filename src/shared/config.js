@@ -13,5 +13,5 @@ export const APP_CONFIG = {
     /** Number of seconds a player has to answer a question. */
     maxTimePerQuestion: 10,
     /** Number of seconds a player has to answer all questions. */
-    maxTime: 90,
+    maxTime: 60,
 };
