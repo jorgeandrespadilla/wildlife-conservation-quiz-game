@@ -36,7 +36,7 @@ function EndModal({
               ? "You have won the game!"
               : "You have lost the game!"}
           </p>
-          <Button onClick={onClose} className="green-btn">Restart</Button>
+          <Button onClick={onClose} className="green-btn">Try again</Button>
         </div>
       </Modal>
       <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />

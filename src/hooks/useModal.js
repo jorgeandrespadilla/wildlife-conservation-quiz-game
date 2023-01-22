@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useBoolean } from "./useBoolean";
 
 /**
- * Hook to manage a modal
- * @param {boolean} initialState Initial state of the modal
+ * Hook to manage a modal.
+ * @param {boolean} startOpened Initial state of the modal
  */
-export const useModal = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
-
-  const open = () => setIsOpen(true);
-
-  const close = () => setIsOpen(false);
+export const useModal = (startOpened = false) => {
+  const {
+    value: isOpen,
+    setTrue: open,
+    setFalse: close,
+  } = useBoolean(startOpened);
 
   return {
     /** Whether the modal is open or not. */

@@ -7,20 +7,20 @@ function GameQuestion() {
   const question = game.questions.current;
 
   const handleAnswer = (isAnswerCorrect) => {
-    game.time.stop();
+    game.time.pause();
     if (!isAnswerCorrect) {
       game.player.damage();
     }
   };
 
   const handleTimeout = () => {
-    game.time.stop();
+    game.time.pause();
     game.player.damage();
   };
 
   const handleContinue = () => {
     game.questions.next();
-    game.time.start();
+    game.time.play();
   };
 
   return (

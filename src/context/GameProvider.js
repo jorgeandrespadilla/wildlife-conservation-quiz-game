@@ -1,7 +1,8 @@
+import { createContext } from "react";
 import { useLife } from "hooks/useLife";
+import { useBoolean } from "hooks/useBoolean";
 import { useQuestions } from "hooks/useQuestions";
 import { useTimeProgress } from "hooks/useTimeProgress";
-import { createContext, useState } from "react";
 import { APP_CONFIG } from "shared/config";
 import { questions } from "shared/data";
 
@@ -43,10 +44,10 @@ export const GameContext = createContext({
     total: 0,
     /** Time progress. */
     progress: 0,
-    /** Starts the timer. */
-    start: () => { },
-    /** Stops the timer. */
-    stop: () => { },
+    /** Plays the timer. */
+    play: () => { },
+    /** Pauses the timer. */
+    pause: () => { },
   },
   player: {
     /** Indicates if the player has won. */
@@ -65,8 +66,18 @@ export const GameContext = createContext({
 });
 
 export const GameProvider = ({ children }) => {
-  const [startedGame, setStartedGame] = useState(false);
-  const [pausedGame, setPausedGame] = useState(false);
+  
+  const {
+    value: startedGame,
+    setTrue: setStartedGame,
+    setFalse: setNotStartedGame,
+  } = useBoolean(false);
+
+  const {
+    value: pausedGame,
+    setTrue: pauseTimer,
+    setFalse: playTimer,
+  } = useBoolean(false);
 
   const {
     question,
@@ -95,20 +106,16 @@ export const GameProvider = ({ children }) => {
     reset: resetLife,
   } = useLife(APP_CONFIG.maxLives, APP_CONFIG.lifeDamage);
 
-  const startTimer = () => setPausedGame(false);
-
-  const stopTimer = () => setPausedGame(true);
-
   const restartGame = () => {
-    setStartedGame(false);
+    setNotStartedGame();
     resetQuestions();
     resetLife();
     resetTimer();
   };
 
   const startGame = () => {
-    setStartedGame(true);
-    setPausedGame(false);
+    setStartedGame();
+    playTimer();
     nextQuestion();
   }
 
@@ -132,8 +139,8 @@ export const GameProvider = ({ children }) => {
         remaining: remainingTime,
         total: APP_CONFIG.maxTime,
         progress: timeProgress,
-        start: startTimer,
-        stop: stopTimer,
+        play: playTimer,
+        pause: pauseTimer,
       },
       player: {
         hasWon: hasPlayerWon,
