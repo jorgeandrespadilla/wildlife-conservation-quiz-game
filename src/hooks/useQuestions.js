@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getRandomElement } from "shared/utils";
 
 /**
@@ -10,18 +10,33 @@ import { getRandomElement } from "shared/utils";
 export const useQuestions = (questions, times) => {
   const [question, setQuestion] = useState(null);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
-
-  const nextQuestion = () => {
-    setQuestion(getRandomElement(questions));
-    setQuestionsAnswered((prevQuestionsAnswered) => prevQuestionsAnswered + 1);
-  };
+  const [remainingQuestions, setRemainingQuestions] = useState(questions);
 
   const hasCompleted = questionsAnswered > times;
+
+  const nextQuestion = () => {
+    if (questionsAnswered >= times || remainingQuestions.length === 0) {
+      setQuestion(null);
+    }
+    else {
+      setQuestion(getRandomElement(remainingQuestions));
+    }
+    setQuestionsAnswered((prevQuestionsAnswered) => prevQuestionsAnswered + 1);
+  };
 
   const reset = () => {
     setQuestion(null);
     setQuestionsAnswered(0);
+    setRemainingQuestions(questions);
   };
+
+  useEffect(() => {
+    if (question && remainingQuestions.length > 0) {
+      setRemainingQuestions((prevRemainingQuestions) => {
+        return prevRemainingQuestions.filter((q) => q.id !== question.id);
+      });
+    }
+  }, [question, remainingQuestions.length]);
 
   return {
     /** Current question. */

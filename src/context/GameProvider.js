@@ -8,6 +8,7 @@ import { questions } from "shared/data";
 
 /**
  * @typedef {Object} QuestionData
+ * @property {number} id Question ID.
  * @property {string} statement Question statement.
  * @property {string} correctAnswer Correct answer.
  */
