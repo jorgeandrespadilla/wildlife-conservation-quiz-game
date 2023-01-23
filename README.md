@@ -1,5 +1,11 @@
 # Wildlife Conservation Quiz Game
 
+## Preview
+
+![](preview/preview-1.png)
+
+![](preview/preview-2.png)
+
 ## Description
 
 This is a quiz game created with React to test your knowledge of wildlife conservation.
