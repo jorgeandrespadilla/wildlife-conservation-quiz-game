@@ -24,7 +24,7 @@ This is a quiz game created with React to test your knowledge of wildlife conser
 1. Clone the repository.
 2. Install dependencies with `npm install`.
 
-### Development
+## Development
 
 To run the app, use `npm start` and open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
